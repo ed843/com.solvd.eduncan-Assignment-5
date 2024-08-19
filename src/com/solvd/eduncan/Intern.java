@@ -4,8 +4,8 @@ public class Intern extends Employee {
     private String schoolName;
     private String major;
 
-    public Intern(String employeeId, String name, String position, String schoolName, String major) {
-        super(employeeId, name, position);
+    public Intern(String employeeId, String name, Department department, String schoolName, String major) {
+        super(employeeId, name, "Intern", department);
         this.schoolName = schoolName;
         this.major = major;
     }

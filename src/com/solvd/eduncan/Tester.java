@@ -3,8 +3,8 @@ package com.solvd.eduncan;
 public class Tester extends Employee {
     private final String testingTools;
 
-    public Tester(String employeeId, String name, String position, String testingTools) {
-        super(employeeId, name, position);
+    public Tester(String employeeId, String name, Department department, String testingTools) {
+        super(employeeId, name, "Tester", department);
         this.testingTools = testingTools;
     }
 
