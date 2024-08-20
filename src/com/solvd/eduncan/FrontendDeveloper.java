@@ -1,9 +1,11 @@
 package com.solvd.eduncan;
 
-public class FrontendDeveloper extends Developer {
+import java.util.List;
+
+public final class FrontendDeveloper extends Developer {
     private String[] frontendFrameworks;
 
-    public FrontendDeveloper(String employeeId, String name, Department department, String[] programmingLanguages, String[] frontendFrameworks) {
+    public FrontendDeveloper(String employeeId, String name, Department department, List<String> programmingLanguages, String[] frontendFrameworks) {
         super(employeeId, name, department, programmingLanguages);
         this.frontendFrameworks = frontendFrameworks;
     }

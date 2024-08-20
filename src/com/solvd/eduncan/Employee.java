@@ -1,19 +1,31 @@
 package com.solvd.eduncan;
 
-public abstract class Employee {
+public abstract class Employee implements Manageable {
+    private static int totalEmployees;
     private String employeeId;
     private String name;
     private String position;
     private Department department;
+
+    static {
+        totalEmployees = 0;
+    }
 
     public Employee(String employeeId, String name, String position, Department department) {
         this.employeeId = employeeId;
         this.name = name;
         this.position = position;
         this.department = department;
+        totalEmployees++;
     }
 
-    String getEmployeeId() {
+
+
+    public static int getTotalEmployees() {
+        return totalEmployees;
+    }
+
+    final String getEmployeeId() {
         return employeeId;
     }
 
@@ -41,6 +53,15 @@ public abstract class Employee {
     void setDepartment(Department department) {
         this.department = department;
     }
+
+    @Override
+    public abstract void assignTask(String task);
+
+    @Override
+    public abstract void reportProgress();
+
+    @Override
+    public abstract String getStatus();
 
     // Abstract method
     public abstract void performDuties();

@@ -2,7 +2,7 @@ package com.solvd.eduncan;
 
 import java.util.Arrays;
 
-public class Client {
+public final class Client {
     private final String clientId;
     private String name;
     private String industry;

@@ -1,8 +1,13 @@
 package com.solvd.eduncan;
 
-public class Intern extends Employee {
+import java.util.ArrayList;
+import java.util.List;
+
+public final class Intern extends Employee implements Skillable, Billable {
     private String schoolName;
     private String major;
+    private List<String> skills = new ArrayList<String>();
+    private String currentTask;
 
     public Intern(String employeeId, String name, Department department, String schoolName, String major) {
         super(employeeId, name, "Intern", department);
@@ -41,4 +46,57 @@ public class Intern extends Employee {
         return "Intern{schoolName='" + schoolName + "', major='" + major + "', " + super.toString() + "}";
     }
 
+    @Override
+    public void addSkill(String skill) {
+        skills.add(skill);
+    }
+
+    @Override
+    public void removeSkill(String skill) {
+        skills.remove(skill);
+    }
+
+    @Override
+    public String[] getSkills() {
+        return skills.toArray(new String[skills.size()]);
+    }
+
+    @Override
+    public boolean hasSkill(String skill) {
+        return skills.contains(skill);
+    }
+
+    @Override
+    public double calculateBillableHours() {
+        return 20;
+    }
+
+    @Override
+    public double getHourlyRate() {
+        return 15.50;
+    }
+
+    @Override
+    public double getTotalCost() {
+        return 15.50 * 20;
+    }
+
+    @Override
+    public void assignTask(String task) {
+        currentTask = task;
+    }
+
+    @Override
+    public void reportProgress() {
+        System.out.println("Still working on " + currentTask + ".");
+    }
+
+    @Override
+    public String getStatus() {
+        if (currentTask.equals("")) {
+            return "Currently free";
+        } else {
+            return "Working on " + currentTask + ".";
+        }
+    }
 }
