@@ -24,7 +24,7 @@ public final class FrontendDeveloper extends Developer {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
         System.out.println("Done!");
     }
