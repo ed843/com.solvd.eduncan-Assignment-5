@@ -30,7 +30,14 @@ public final class Tester extends Employee implements Skillable, Billable {
 
     @Override
     public void removeSkill(String skill) {
-        skills.remove(skill);
+        try {
+            if (!skills.contains(skill)) {
+                throw new SkillNotFoundException("Skill not found: " + skill);
+            }
+            skills.remove(skill);
+        } catch (SkillNotFoundException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     @Override
@@ -39,7 +46,7 @@ public final class Tester extends Employee implements Skillable, Billable {
     }
 
     @Override
-    public boolean hasSkill(String skill) {
+    public boolean hasSkill(String skill) throws SkillNotFoundException {
         return skills.contains(skill);
     }
 

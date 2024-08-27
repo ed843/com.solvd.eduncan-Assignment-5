@@ -60,10 +60,10 @@ public final class Manager extends Employee implements Reportable{
         return "Generating report for manager " + getEmployeeId() + ".";
     }
 
-    public void exportReport(String format) {
+    public void exportReport(String format) throws InvalidReportFormatException {
         if(format.equals("pdf") || format.equals("docx") || format.equals("xls") || format.equals("xlsx"))
             System.out.println("Exporting report for project " + getName() + " at " + getDepartment().toString() + " in " + format + " format.");
         else
-            System.out.println("Sorry, but we cannot export in that format.");
+            throw new InvalidReportFormatException("The report cannot be exported in the given format");
     }
 }

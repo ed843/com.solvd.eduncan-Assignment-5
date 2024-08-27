@@ -9,8 +9,13 @@ public final class Client {
     private Project[] currentClientProjects;
     private Project[] pastClientProjects;
 
-    public Client(String clientId, String name, String industry, Project[] currentClientProjects, Project[] pastClientProjects) {
+    public Client(String clientId, String name, String industry, Project[] currentClientProjects, Project[] pastClientProjects) throws InvalidClientIdException {
+        if (clientId == null || clientId.isEmpty()) {
+            throw new InvalidClientIdException("Client id cannot be null or empty");
+        }
+
         this.clientId = clientId;
+
         this.name = name;
         this.industry = industry;
         this.currentClientProjects = currentClientProjects;

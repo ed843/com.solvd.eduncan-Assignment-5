@@ -1,7 +1,10 @@
 package com.solvd.eduncan;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
 
 public class Project implements Manageable, Auditable, Reportable, Billable {
     private String projectId;
@@ -13,6 +16,7 @@ public class Project implements Manageable, Auditable, Reportable, Billable {
     public Project(String projectId, String projectName, double budget) {
         this.projectId = projectId;
         this.projectName = projectName;
+        if (budget < 0) throw new NegativeBudgetException("Budget cannot be negative");
         this.budget = budget;
     }
 
@@ -25,11 +29,13 @@ public class Project implements Manageable, Auditable, Reportable, Billable {
     @Override
     public void startAudit(String date) {
         auditLog += "\nProject " + projectId + " started at " + date;
+        LoggerUtil.log(Level.INFO, "Audit started for project " + projectId + " on " + date);
     }
 
     @Override
     public void endAudit(String date) {
         auditLog += "\nProject " + projectId + " finished at " + date;
+        LoggerUtil.log(Level.INFO, "Audit ended for project " + projectId + " on " + date);
     }
 
     @Override
@@ -43,11 +49,23 @@ public class Project implements Manageable, Auditable, Reportable, Billable {
     }
 
     @Override
-    public void exportReport(String format) {
+    public void exportReport(String format) throws InvalidReportFormatException {
         if(format.equals("pdf") || format.equals("docx") || format.equals("xls") || format.equals("xlsx"))
             System.out.println("Exporting report for project " + projectId + " at " + projectName + " in " + format + " format.");
         else
-            System.out.println("Sorry, but we cannot export in that format.");
+            throw new InvalidReportFormatException("The report cannot be exported in the given format '" + format + "'");
+    }
+
+    public void writeProjectDetailsToFile(String fileName) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+            writer.write("Project ID: " + projectId);
+            writer.newLine();
+            writer.write("Project Name: " + projectName);
+            writer.newLine();
+            writer.write("Budget: " + budget);
+        } catch (IOException e) {
+            System.err.println("Error writing to file: " + e.getMessage());
+        }
     }
 
 
@@ -68,7 +86,7 @@ public class Project implements Manageable, Auditable, Reportable, Billable {
 
     @Override
     public String getStatus() {
-        if (currentTask.equals("")) {
+        if (currentTask.isEmpty()) {
             return "Currently free";
         } else {
             return "Working on " + currentTask + ".";

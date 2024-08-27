@@ -9,7 +9,7 @@ public class Developer extends Employee implements Skillable, Billable {
     private String currentTask = "";
 
     public Developer(String employeeId, String name, Department department, List<String> programmingLanguages) {
-        super(employeeId, name,"Developer", department);
+        super(employeeId, name, "Developer", department);
         this.skills = programmingLanguages;
     }
 
@@ -48,7 +48,14 @@ public class Developer extends Employee implements Skillable, Billable {
 
     @Override
     public void removeSkill(String skill) {
-        skills.remove(skill);
+        try {
+            if (!skills.contains(skill)) {
+                throw new SkillNotFoundException("Skill not found: " + skill);
+            }
+            skills.remove(skill);
+        } catch (SkillNotFoundException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     @Override
@@ -57,8 +64,8 @@ public class Developer extends Employee implements Skillable, Billable {
     }
 
     @Override
-    public boolean hasSkill(String skill) {
-        return skills.contains(skill);
+    public boolean hasSkill(String skill) throws SkillNotFoundException {
+       return skills.contains(skill);
     }
 
     @Override

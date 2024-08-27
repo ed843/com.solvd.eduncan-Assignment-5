@@ -17,7 +17,7 @@ public class Department extends Company implements Manageable {
             this.departmentName = departmentName;
             totalDepartments++;
         } else {
-            throw new IllegalStateException("Maximum number of departments reached.");
+            throw new DepartmentLimitExceededException("Maximum number of departments reached.");
         }
     }
 
