@@ -1,10 +1,14 @@
 package com.solvd.eduncan;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Department extends Company implements Manageable {
     private final String departmentName;
     private static int totalDepartments;
     private static final int MAX_DEPARTMENTS = 10;
-    String currentTask;
+    private String currentTask;
+    private Set<Employee> employees;
 
     static {
         totalDepartments = 0;
@@ -19,6 +23,7 @@ public class Department extends Company implements Manageable {
         } else {
             throw new DepartmentLimitExceededException("Maximum number of departments reached.");
         }
+        this.employees = new HashSet<Employee>();
     }
 
     public String getDepartmentName() {
@@ -59,5 +64,13 @@ public class Department extends Company implements Manageable {
         } else {
             return "Working on " + currentTask + ".";
         }
+    }
+
+    public void addEmployee(Employee employee) {
+        employees.add(employee);
+    }
+
+    public Set<Employee> getEmployees() {
+        return new HashSet<>(employees);
     }
 }

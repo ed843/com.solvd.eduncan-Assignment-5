@@ -4,20 +4,23 @@ package com.solvd.eduncan;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.logging.Level;
 
 public class Project implements Manageable, Auditable, Reportable, Billable {
-    private String projectId;
+    private final String projectId;
     private String projectName;
     private double budget;
     private static String auditLog;
     private String currentTask;
+    private CustomLinkedList<String> taskList;
 
     public Project(String projectId, String projectName, double budget) {
         this.projectId = projectId;
         this.projectName = projectName;
         if (budget < 0) throw new NegativeBudgetException("Budget cannot be negative");
         this.budget = budget;
+        this.taskList = new CustomLinkedList<>();
     }
 
     @Override
@@ -25,6 +28,25 @@ public class Project implements Manageable, Auditable, Reportable, Billable {
         return "Project{projectId='" + projectId + "', projectName='" + projectName + "', budget=" + budget + "}";
     }
 
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String newProjectName) {
+        this.projectName = newProjectName;
+    }
+
+    public double getBudget() {
+        return budget;
+    }
+
+    public void setBudget(double newBudget) {
+        this.budget = newBudget;
+    }
 
     @Override
     public void startAudit(String date) {
@@ -106,6 +128,22 @@ public class Project implements Manageable, Auditable, Reportable, Billable {
     @Override
     public double getTotalCost() {
         return 200 * 30;
+    }
+
+    public void addTask(String task) {
+        taskList.add(task);
+    }
+
+    public String getTask(int index) {
+        return taskList.get(index);
+    }
+
+    public void removeTask(int index) {
+        taskList.remove(index);
+    }
+
+    public int getTaskCount() {
+        return taskList.size();
     }
 }
 

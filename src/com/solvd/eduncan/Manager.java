@@ -1,14 +1,17 @@
 package com.solvd.eduncan;
 
+import java.util.PriorityQueue;
 import java.util.concurrent.TimeUnit;
 
 public final class Manager extends Employee implements Reportable{
     private String availability;
     private String currentTask;
+    private PriorityQueue<String> taskPriority;
 
     public Manager(String employeeId, String name, Department department, String availability) {
         super(employeeId, name, "Manager", department);
         this.availability = availability;
+        this.taskPriority = new PriorityQueue<>();
     }
 
     public String getAvailability() {
@@ -65,5 +68,13 @@ public final class Manager extends Employee implements Reportable{
             System.out.println("Exporting report for project " + getName() + " at " + getDepartment().toString() + " in " + format + " format.");
         else
             throw new InvalidReportFormatException("The report cannot be exported in the given format");
+    }
+
+    public void addPriorityTask(String task) {
+        taskPriority.offer(task);
+    }
+
+    public String getNextPriorityTask() {
+        return taskPriority.poll();
     }
 }

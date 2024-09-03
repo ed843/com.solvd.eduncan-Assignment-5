@@ -1,6 +1,7 @@
 package com.solvd.eduncan;
 
 import java.util.Arrays;
+import java.util.TreeMap;
 
 public final class Client {
     private final String clientId;
@@ -8,6 +9,7 @@ public final class Client {
     private String industry;
     private Project[] currentClientProjects;
     private Project[] pastClientProjects;
+    private final TreeMap<String, Project> projectMap;
 
     public Client(String clientId, String name, String industry, Project[] currentClientProjects, Project[] pastClientProjects) throws InvalidClientIdException {
         if (clientId == null || clientId.isEmpty()) {
@@ -20,6 +22,7 @@ public final class Client {
         this.industry = industry;
         this.currentClientProjects = currentClientProjects;
         this.pastClientProjects = pastClientProjects;
+        this.projectMap = new TreeMap<>();
     }
 
     public String getClientId() {
@@ -52,6 +55,14 @@ public final class Client {
 
     public void setPastClientProject(Project[] pastClientProjects) {
         this.pastClientProjects = pastClientProjects;
+    }
+
+    public void addProject(String projectId, Project project) {
+        projectMap.put(projectId, project);
+    }
+
+    public TreeMap<String, Project> getProjectMap() {
+        return new TreeMap<>(projectMap);
     }
 
     @Override
